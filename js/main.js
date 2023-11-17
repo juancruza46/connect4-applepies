@@ -169,13 +169,85 @@ function handleDrop(event) {
     // after everything is done, change whose turn it is
     turn *= -1
     // after every move, we want to check for a winner
+    // we're going to assign the winning value to the winner variable
+    winner = getWinner(colIdx, rowIdx)
     // after every move, we want to render the changes
     render()
+    // console.log('this is the current board', board)
 }
 
 
-// getWinner -> checks to see if a player has won the game
 // we might need multiple functions to achieve this
+// helper function for our winchecking functions
+function countAdjacent(colIdx, rowIdx, colOffset, rowOffset) {
+    // get the most recently played color
+    const player = board[colIdx][rowIdx]
+    // count how many matches are adjacent
+    let count = 0
+
+    // use a while loop to check the spaces around the most recently played spot
+    colIdx += colOffset
+    rowIdx += rowOffset
+
+    while (
+        board[colIdx] !== undefined && 
+        board[colIdx][rowIdx] !== undefined && 
+        board[colIdx][rowIdx] === player
+    ) {
+        count++
+        colIdx += colOffset
+        rowIdx += rowOffset
+    }
+    console.log('the count in countAdjacent', count)
+
+    return count
+}
+// checkHorizontalWin
+function checkHorizontalWin(colIdx, rowIdx) {
+    // going to the left
+    const adjCountLeft = countAdjacent(colIdx, rowIdx, -1, 0)
+    // going to the right
+    const adjCountRight = countAdjacent(colIdx, rowIdx, 1, 0)
+
+    return adjCountLeft + adjCountRight >= 3 ? board[colIdx][rowIdx] : null
+}
+// checkVerticalWin
+function checkVerticalWinner(colIdx, rowIdx) {
+    // go from N to S
+    // 0 = not changing column
+    // -1 moves south down the column
+    return countAdjacent(colIdx, rowIdx, 0, -1) === 3 ? board[colIdx][rowIdx] : null
+}
+// checkDiagonalSENWWin
+function checkDiagonalSENWWin(colIdx, rowIdx) {
+    // go NW
+    const adjCountNW = countAdjacent(colIdx, rowIdx, -1, 1)
+    // go SE
+    const adjCountSE = countAdjacent(colIdx, rowIdx, 1, -1)
+
+    return adjCountNW + adjCountSE >= 3 ? board[colIdx][rowIdx] : null
+}
+// checkDiagonalSWNEWin
+function checkDiagonalSWNEWin(colIdx, rowIdx) {
+    // go NE
+    const adjCountNE = countAdjacent(colIdx, rowIdx, 1, 1)
+    // go SW
+    const adjCountSW = countAdjacent(colIdx, rowIdx, -1, -1)
+
+    return adjCountNE + adjCountSW >= 3 ? board[colIdx][rowIdx] : null
+}
+// getWinner -> checks to see if a player has won the game
+function getWinner(colIdx, rowIdx) {
+    console.log('this is colIdx - getWinner', colIdx)
+    console.log('this is rowIdx - getWinner', rowIdx)
+    console.log('the board', board)
+    return(
+        checkHorizontalWin(colIdx, rowIdx) ||
+        checkVerticalWinner(colIdx, rowIdx) ||
+        checkDiagonalSENWWin(colIdx, rowIdx) ||
+        checkDiagonalSWNEWin(colIdx, rowIdx)
+    )
+}
 
 //////////////////////////////////
 // event listeners
@@ -184,3 +256,4 @@ function handleDrop(event) {
 // click on a marker (to make a move)
 document.getElementById('markers').addEventListener('click', handleDrop)
 // click play again (initialize an empty board) (reset all variables)
+playAgainButton.addEventListener('click', init)
