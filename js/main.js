@@ -1,3 +1,28 @@
-console.log('js is linked and ready to go')
+// game displays rows and columns of circles
+// player is notified of whose turn it is
+// player clicks a button to make a move
+// the player's move is displayed on the board
+// the turn switches from p1 to p2
+// p2 can select a move with the same process
+// at the end of a game, announce the winner
+// allow the opportunity to play again
 
-console.log('this is an example and will be deleted')
+//////////////////////////////////
+// constants
+//////////////////////////////////
+
+//////////////////////////////////
+// state variables
+//////////////////////////////////
+
+//////////////////////////////////
+// cached DOM elements
+//////////////////////////////////
+
+//////////////////////////////////
+// functions
+//////////////////////////////////
+
+//////////////////////////////////
+// event listeners
+//////////////////////////////////
