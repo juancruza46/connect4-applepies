@@ -88,10 +88,10 @@ function renderBoard() {
             const cellId = `c${colIdx}r${rowIdx}`
             // I could have done this, but it's a lil clunky and old school
             // const cellId2 = 'c' + colIdx + 'r' + rowIdx
-            console.log('cellId', cellId)
+            // console.log('cellId', cellId)
 
             const cellEl = document.getElementById(cellId)
-            console.log('cellEl', cellEl)
+            // console.log('cellEl', cellEl)
 
             cellEl.style.backgroundColor = colors[cellVal]
             
@@ -149,6 +149,30 @@ function render() {
 }
 
 // handleDrop -> this will be the main gameplay function, finds the marker that was clicked on, and drops to the bottommost position allowed
+function handleDrop(event) {
+    // check if a move is valid
+    // determine the column selected
+    const colIdx = markerEls.indexOf(event.target)
+    console.log('this is colIdx inside handleDrop', colIdx)
+    // assign a value to a specific cell (board element) by updating the board array
+    const colArr = board[colIdx]
+    console.log('this is colArr inside handleDrop', colArr)
+    // we want to select the first row cell that we find in the colArr
+    // this gets the first item that contains a zero
+    // returns the item if true, -1 if false
+    const rowIdx = colArr.indexOf(0)
+    // if the move is invalid, exit the function so the user can try again
+    if (rowIdx === -1) return
+    // if the move IS valid, update the value of the board array
+    // we'll assign the value to the cell based on the turn
+    colArr[rowIdx] = turn
+    // after everything is done, change whose turn it is
+    turn *= -1
+    // after every move, we want to check for a winner
+    // after every move, we want to render the changes
+    render()
+}
+
 
 // getWinner -> checks to see if a player has won the game
 // we might need multiple functions to achieve this
@@ -158,4 +182,5 @@ function render() {
 //////////////////////////////////
 // what events will happen, what they should be attached to, and what functions they call
 // click on a marker (to make a move)
+document.getElementById('markers').addEventListener('click', handleDrop)
 // click play again (initialize an empty board) (reset all variables)
