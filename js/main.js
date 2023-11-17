@@ -179,6 +179,9 @@ function handleDrop(event) {
 
 // we might need multiple functions to achieve this
 // helper function for our winchecking functions
+// countAdjacent is a function that looks at the last position played, and counts the adjacent tiles, it will return a number that represents all the adjacent tiles that match the last one played.
+// we will use this value in our other functions, which determine what direction the countAdjacent should move(horizontal, vertical or diagonal)
+// these other functions use that number to determine if there is a winner, if the number returns as 3, it means that 'three tiles touching the last one played are matching' therefore, we have a winner.
 function countAdjacent(colIdx, rowIdx, colOffset, rowOffset) {
     // get the most recently played color
     const player = board[colIdx][rowIdx]
