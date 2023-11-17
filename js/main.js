@@ -10,19 +10,64 @@
 //////////////////////////////////
 // constants
 //////////////////////////////////
+// this section is going to hold things like players, colors, and anything that might be useful to refer to but doesn't change over the course of gameplay.
+// the only constant we're going to use here are the colors, stored in an object for the sake of easy reference.
+// so, player 1 has one color, player 2 a different color, or we'll initialize the game board pieces with a 'blank' color
+const colors = {
+    0: 'white',
+    1: 'purple',
+    // if we want to use a negative number for a key
+    // we can use a string
+    '-1': 'orange'
+}
 
 //////////////////////////////////
 // state variables
 //////////////////////////////////
+// things that we want to constantly check, refer to, and change.
+// these will allow us to properly render changes at the right time.
+let board // an array of 7 nested arrays
+let turn // will be a value of 1 or -1 (1 || -1)
+let winner // null || 1 || -1 || 'T'
 
 //////////////////////////////////
 // cached DOM elements
 //////////////////////////////////
+// grab our HTML elements, save them to variables, and use later
+const messageEl = document.querySelector('h2')
+const playAgainButton = document.querySelector('button')
+// we want to grab our marker elements and save them to an array
+// NOT A NODELIST
+// ... = spread operator
+// this operator takes a copy of whatever is selected(object, a nodelist, htmlcollection, array) and does something to all of the items
+// because we used array brackets, the spread operator is grabbing the items in the nodelist and pushing them into a new array
+const markerEls = [...document.querySelectorAll('#markers > div')]
+console.log('markerEls \n', markerEls)
 
 //////////////////////////////////
 // functions
 //////////////////////////////////
 
+// function - init - initialize an empty game.
+// the init function runs one time when the page loads
+// then the init function will be called again from the play again button
+
+// function - renderBoard - render the game board
+
+// render controls -> changes the visibility of the play again button
+
+// render message -> display whose turn it is
+
+// render -> call all of our render based functions at once
+
+// handleDrop -> this will be the main gameplay function, finds the marker that was clicked on, and drops to the bottommost position allowed
+
+// getWinner -> checks to see if a player has won the game
+// we might need multiple functions to achieve this
+
 //////////////////////////////////
 // event listeners
 //////////////////////////////////
+// what events will happen, what they should be attached to, and what functions they call
+// click on a marker (to make a move)
+// click play again (initialize an empty board) (reset all variables)
